@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>gMaps Overlay</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 500px;
+        width: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <h1> Google Maps Overlay</h1>
+
+    <input id="lat" type="number" placeholder="Enter latitude">
+    <br><br>
+    <input id="long" type="number" placeholder="Enter longitude">
+    <br><br>
+    <button id="submit">Submit</button>
+    <br><br>
+
+    <div id="map"></div>
+
+    <script type="text/javascript">
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 5,
+            center: {lat: 40.266791, lng: -76.966963},
+            mapTypeId: 'roadmap'
+        });
+
+        var x;
+        var y;
+        document.getElementById("submit").onclick = function() {
+            x = document.getElementById("lat").value
+            console.log(x);
+            y = document.getElementById("long").value;
+            console.log(y);
+
+            // Define the LatLng coordinates for the polygon's path.
+            var triangleCoords = [
+                {lat: Number(x) + 1, lng: Number(y) - 1},
+                {lat: Number(x) + 1, lng: Number(y) + 1},
+                {lat: Number(x) - 1, lng: Number(y) + 1},
+                {lat: Number(x) - 1, lng: Number(y) - 1},
+                {lat: Number(x) - 1, lng: Number(y) - 1}
+            ];
+
+            // Construct the polygon.
+            var bermudaTriangle = new google.maps.Polygon({
+                paths: triangleCoords,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35
+            });
+            
+            bermudaTriangle.setMap(map);
+
+        }
+
+        var rectCoords = [
+            {lat: 91, lng: -89},
+            {lat: 41, lng: -75},
+            {lat: 79, lng: -44},
+            {lat: 39, lng: -77}
+        ];
+
+
+      // This example creates a simple polygon representing the Bermuda Triangle.
+
+    //   function initMap() {
+    //     var map = new google.maps.Map(document.getElementById('map'), {
+    //       zoom: 5,
+    //       center: {lat: 40.266791, lng: -76.966963},
+    //       mapTypeId: 'roadmap'
+    //     });
+
+        // // Define the LatLng coordinates for the polygon's path.
+        // var triangleCoords = [
+        //   {lat: 41, lng: -77},
+        //   {lat: 41, lng: -75},
+        //   {lat: 39, lng: -75},
+        //   {lat: 39, lng: -77}
+        // ];
+
+        // // Construct the polygon.
+        // var bermudaTriangle = new google.maps.Polygon({
+        //   paths: triangleCoords,
+        //   strokeColor: '#FF0000',
+        //   strokeOpacity: 0.8,
+        //   strokeWeight: 2,
+        //   fillColor: '#FF0000',
+        //   fillOpacity: 0.35
+        // });
+        // bermudaTriangle.setMap(map);
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpEk2doO5DMfcQiLKoIcb41zW1WRgyyl4&callback=initMap">
+    </script>
+  </body>
+</html>
